@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.model_selection import train_test_split
+import sklearn 
 import tensorflow as tf
 from tensorflow.estimator import LinearClassifier
 from pandas.api.types import CategoricalDtype
@@ -11,6 +11,8 @@ from sklearn.preprocessing import StandardScaler
 from mlxtend.feature_selection import ColumnSelector
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn import linear_model
+from sklearn.metrics import accuracy_score, precision_score, recall_score
+from sklearn.model_selection import train_test_split
 
 
 
@@ -78,3 +80,25 @@ test_predictions_series = pd.Series([p['classes'][0].decode("utf-8") for p in te
 
 train_predictions_df = pd.DataFrame(train_predictions_series, columns=['predictions'])
 test_predictions_df = pd.DataFrame(test_predictions_series, columns=['predictions'])
+
+y_train.reset_index(drop=True, inplace=True)
+
+#Validation
+def calculate_binary_class_scores(y_true, y_pred):
+    accuracy = accuracy_score(y_true, y_pred.astype('int64'))
+    precision = precision_score(y_true, y_pred.astype('int64'))
+    recall = recall_score(y_true, y_pred.astype('int64'))
+    return accuracy, precision, recall
+
+train_accuracy_score, train_precision_score, train_recall_score = calculate_binary_class_scores(y_train, train_predictions_series)
+test_accuracy_score, test_precision_score, test_recall_score = calculate_binary_class_scores(y_test, test_predictions_series)
+
+print('Training Data Accuracy (%) = ', round(train_accuracy_score*100,2))
+print('Training Data Precision (%) = ', round(train_precision_score*100,2))
+print('Training Data Recall (%) = ', round(train_recall_score*100,2))
+
+print('#'*50)
+
+print('Test Data Accuracy (%) = ', round(test_accuracy_score*100,2))
+print('Test Data Precision (%) = ', round(test_precision_score*100,2))
+print('Test Data Recall (%) = ', round(test_recall_score*100,2))

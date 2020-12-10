@@ -1,20 +1,11 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 import sklearn 
 import tensorflow as tf
 from tensorflow.estimator import LinearClassifier
 from pandas.api.types import CategoricalDtype
-from sklearn.pipeline import FeatureUnion, Pipeline
-from sklearn.preprocessing import StandardScaler
-from mlxtend.feature_selection import ColumnSelector
-from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn import linear_model
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 from sklearn.model_selection import train_test_split
-
-
 
 
 
@@ -102,3 +93,5 @@ print('#'*50)
 print('Test Data Accuracy (%) = ', round(test_accuracy_score*100,2))
 print('Test Data Precision (%) = ', round(test_precision_score*100,2))
 print('Test Data Recall (%) = ', round(test_recall_score*100,2))
+
+
